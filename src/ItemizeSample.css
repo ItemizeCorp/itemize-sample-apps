@@ -1,0 +1,19 @@
+.itemize-sample {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.itemize-sample__header {
+  margin: 1rem 0;
+}
+
+.itemize-sample__header input {
+  margin-right: 1.5rem;
+}
+
+.itemize-sample__json {
+  max-width: 800px;
+  text-align: left;
+  padding: 1.5rem;
+}
