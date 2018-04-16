@@ -8,7 +8,15 @@ For more information, check out the [Itemize API Documentation](https://apidocs.
 
 First, download or clone the repository.
 
-Then, update the configuration file (```itemize-react-demo-app/src/config.json```) with your Itemize API Key and Account ID. If you don't have a key and would like one, you can request one [here](https://www.itemize.com/api/).
+Then, update the configuration file (```itemize-react-demo-app/src/config.json```) with your Itemize API Key and Account ID:
+```
+{
+  "ITEMIZE_API_KEY": "INSERT_KEY_HERE",
+  "ITEMIZE_ACCOUNT_ID": "INSERT_ACCOUNT_ID_HERE",
+  "POLLING_INTERVAL": 3000
+}
+```
+If you don't have a key and would like one, you can request one [here](https://www.itemize.com/api/).
 
 Finally, inside the project folder:
 
