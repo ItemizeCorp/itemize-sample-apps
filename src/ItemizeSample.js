@@ -3,7 +3,11 @@ import './ItemizeSample.css';
 import React, { Component } from 'react';
 import TreeView from './components/TreeView'
 import Loader from './components/Loader'
-import { ITEMIZE_API_KEY, ITEMIZE_ACCOUNT_ID } from './config.json'
+import {
+  ITEMIZE_API_KEY,
+  ITEMIZE_ACCOUNT_ID,
+  POLLING_INTERVAL,
+} from './config.json'
 
 
 class ItemizeSample extends Component {
@@ -13,6 +17,7 @@ class ItemizeSample extends Component {
       formattedData: null,
       file: null,
       loading: false,
+      requests: [],
     };
   }
 
@@ -77,6 +82,10 @@ class ItemizeSample extends Component {
         } else if (response.status !== 404) {
           const { error } = await response.json();
           throw new Error(error);
+        } else {
+          this.setState(({requests}) => ({
+            requests: [...requests, `Polling - Status: ${response.status} - URL: ${response.url}`],
+          }))
         }
       } catch (error) {
         this.handleError(error);
@@ -86,9 +95,10 @@ class ItemizeSample extends Component {
   beginPollingForProcessedDocument = (documentId) => {
     this.pollingInterval = setInterval(
       () => this.getDocumentFromItemizeAPI(documentId),
-      3000
+      POLLING_INTERVAL
     );
   }
+
 
   /* Validation */
 
@@ -128,7 +138,8 @@ class ItemizeSample extends Component {
       this.postDocumentToItemizeAPI();
       this.setState({
         loading: true,
-        formattedData: null
+        formattedData: null,
+        requests: [],
       });
     } else {
       alert("The file you selected isn't valid, please use a jpeg, png, or pdf");
@@ -139,6 +150,16 @@ class ItemizeSample extends Component {
 
 
   /* Render */
+
+  renderPollingRequests = () => (
+    <div className="itemize-sample__requests">
+      {
+        this.state.requests.map((request, idx) => (
+          <p key={`request-${idx}`}>{request}</p>
+        ))
+      }
+    </div>
+  )
 
   render() {
     const disableUploadButton = !this.state.file || this.state.loading
@@ -154,8 +175,9 @@ class ItemizeSample extends Component {
               Upload Document Image
             </button>
         </header>
+        { this.state.loading && <Loader text="Polling"/> }
+        { this.state.requests.length > 0 && this.renderPollingRequests() }
         { this.state.formattedData && <TreeView src={this.state.formattedData} /> }
-        { this.state.loading && <Loader /> }
       </div>
     );
   }
