@@ -1,6 +1,6 @@
 # Itemize API React Demo App
 
-This repository contains a sample app that showcases a simple integration with the [Itemize API](https://www.itemize.com/api/).
+This repository contains a sample app, built with create-react-app, that showcases a simple integration with the [Itemize API](https://www.itemize.com/api/).
 
 For more information, check out the [Itemize API Documentation](https://apidocs.itemize.com/enterprise/).
 
